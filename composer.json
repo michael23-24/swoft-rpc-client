@@ -2,7 +2,9 @@
     "name": "michael23/swoft-rpc-client",
     "description": "非swoft框架应用请求swoft的rpc客户端",
     "type": "library",
-    "license": "michael23-1.0",
+    "require": {
+    },
+    "license": "michael23-1.1",
     "authors": [
         {
             "name": "michael23",
