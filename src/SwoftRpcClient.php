@@ -66,21 +66,21 @@ class SwoftRpcClient
         $ext['appId'] = $this->appId;
 
         $address = "tcp://{$this->host}:{$this->port}";
-        $fp = stream_socket_client($address, $errno, $errstr);
+        $fp      = stream_socket_client($address, $errno, $errstr);
         if (!$fp) {
             return $this->formateData(0, "stream_socket_client fail errno={$errno} errstr={$errstr}");
         }
 
         $service = "{$service}Interface";
-        $class        = "App\Rpc\Lib\\{$service}";
-        $req  = [
+        $class   = "App\Rpc\Lib\\{$service}";
+        $req     = [
             "jsonrpc" => '2.0',
             "method"  => sprintf("%s::%s::%s", $version, $class, $method),
             'params'  => $params,
             'id'      => '',
             'ext'     => $ext,
         ];
-        $data = json_encode($req) . self::RPC_EOL;
+        $data    = json_encode($req) . self::RPC_EOL;
         fwrite($fp, $data);
 
         $result = '';
@@ -98,7 +98,7 @@ class SwoftRpcClient
         fclose($fp);
         $result = json_decode($result, true);
         if (isset($result['error'])) {
-            return $this->formateData($result['error'], $result['message']);
+            return $this->formateData($result['error']['code'], $result['error']['message']);
         }
         return $this->formateData($result['result']['code'], $result['result']['message'], $result['result']['data'], $result['result']['ext']);
     }
