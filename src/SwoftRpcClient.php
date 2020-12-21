@@ -94,8 +94,9 @@ class SwoftRpcClient
                 $result .= $tmp;
             }
         }
-
         fclose($fp);
+
+
         $result = json_decode($result, true);
         if (isset($result['error'])) {
             return $this->formateData($result['error']['code'], $result['error']['message']);
