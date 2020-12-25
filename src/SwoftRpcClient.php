@@ -58,7 +58,7 @@ class SwoftRpcClient
      * @param $params 请求参数
      * @param null $version 服务版本
      * @param array $ext 扩展参数
-     * @return array 格式为code,message,data,ext;code==1表示无错误，其他表示有错误
+     * @return array
      */
     public function request($service, $method, $params, $version = null, $ext = [])
     {

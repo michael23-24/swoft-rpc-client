@@ -52,9 +52,10 @@ Trait DataFormate
      * @param string $msg 提示信息
      * @param array $data 返回数据
      * @param array|string $ext 扩展
+     * @param string $requestId 请求id
      * @return array
      */
-    public function formateData($code, $msg = '', $data = [], $ext = '')
+    public function formateData($code, $msg = '', $data = [], $ext = '', $requestId = '')
     {
         if (empty($msg)) {
             $msg = $code == 1 ? 'success' : 'fail';
@@ -66,6 +67,9 @@ Trait DataFormate
         $returnData['data'] = $data;
         $returnData['ext']  = $ext;
 
+        if ($requestId) {
+            $returnData['requestId'] = $requestId;
+        }
         return $returnData;
     }
 
