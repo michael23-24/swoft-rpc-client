@@ -101,7 +101,8 @@ class SwoftRpcClient
         if (isset($result['error'])) {
             return $this->formateData($result['error']['code'], $result['error']['message']);
         }
-        return $this->formateData($result['result']['code'], $result['result']['message'], $result['result']['data'], $result['result']['ext']);
+        $requestId = isset($result['result']['requestId']) ? $result['result']['requestId'] : '';
+        return $this->formateData($result['result']['code'], $result['result']['message'], $result['result']['data'], $result['result']['ext'], $requestId);
     }
 }
 
