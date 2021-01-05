@@ -33,6 +33,18 @@ class SwoftRpcClient
     protected $appId = null;
 
     /**
+     * rpc的应用密钥
+     * @var null
+     */
+    protected $secret = null;
+
+    /**
+     * 当前时间戳
+     * @var null
+     */
+    protected $timestamp = null;
+
+    /**
      * rpc的服务版本
      * @var null
      */
@@ -40,15 +52,17 @@ class SwoftRpcClient
 
     const RPC_EOL = "\r\n\r\n";
 
-    public function __construct($host, $port, $appId, $version = '1.0')
+    public function __construct($host, $port, $appId, $secret = '', $timestamp = '', $version = '1.0')
     {
         if (empty($host) || empty($port) || empty($appId) || empty($version)) {
             throw new \Exception("参数不合法");
         }
-        $this->host    = $host;
-        $this->port    = $port;
-        $this->appId   = $appId;
-        $this->version = $version;
+        $this->host      = $host;
+        $this->port      = $port;
+        $this->appId     = $appId;
+        $this->version   = $version;
+        $this->secret    = $secret;
+        $this->timestamp = $timestamp;
     }
 
     /**
@@ -63,7 +77,9 @@ class SwoftRpcClient
     public function request($service, $method, $params, $version = null, $ext = [])
     {
         $version || $version = $this->version;
-        $ext['appId'] = $this->appId;
+        $ext['appId']     = $this->appId;
+        $ext['timestamp'] = $this->timestamp;
+        $ext['secret']    = $this->secret;
 
         $address = "tcp://{$this->host}:{$this->port}";
         $fp      = stream_socket_client($address, $errno, $errstr);
